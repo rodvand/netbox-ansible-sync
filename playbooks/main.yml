@@ -28,18 +28,17 @@
         tags:
           - tags
 
-      - name: Sync tenant groups
-        netbox.netbox.netbox_tenant_group:
+      - name: Sync tenants
+        netbox.netbox.netbox_tenant:
           netbox_url: '{{ dst_netbox_url }}'
           netbox_token: '{{ dst_netbox_token }}'
           data:
             name: '{{ item.value.name }}'
-            parent_tenant_group: '{{ item.value.parent|default(omit) }}'
             description: '{{ item.value.description }}'
             tags: '{{ item.value.tags }}'
         loop: "{{ query('netbox.netbox.nb_lookup', 
-                  'tenant-groups', 
+                  'tenants', 
                   api_endpoint=src_netbox_url, 
                   token=src_netbox_token) }}"
         tags:
-          - tenant_groups
+          - tenants
