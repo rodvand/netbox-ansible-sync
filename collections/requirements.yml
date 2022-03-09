@@ -1,3 +1,5 @@
 ---
 collections:
-- netbox.netbox
+  - name: https://github.com/rodvand/ansible_modules.git
+    type: git
+    version: 752_meta
