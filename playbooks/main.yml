@@ -1,5 +1,5 @@
 ---
-  - name: Sync data from one NetBox isntance to another
+  - name: Sync data from one NetBox instance to another
     hosts: localhost
     connection: local 
     gather_facts: no
@@ -8,6 +8,9 @@
       src_netbox_token: '{{ input_src_netbox_token }}'
       dst_netbox_url: '{{ input_dst_netbox_url }}'
       dst_netbox_token: '{{ input_dst_netbox_token }}'
+
+    collections:
+      - netbox.netbox
 
     tasks:
       - name: Sync tags
