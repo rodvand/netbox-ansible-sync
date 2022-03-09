@@ -13,10 +13,6 @@
       - netbox.netbox
 
     tasks:
-      - name: DEBUG
-        ansible.builtin.shell:
-          cmd: ansible-galaxy collection install netbox.netbox --force
-
       - name: Sync tags
         netbox.netbox.netbox_tag:
           netbox_url: '{{ dst_netbox_url }}'
