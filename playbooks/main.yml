@@ -1,0 +1,25 @@
+---
+  - name: Sync data from one NetBox isntance to another
+    hosts: localhost
+    connection: local 
+    gather_facts: no
+    vars:
+      src_netbox_url: '{{ input_src_netbox_url }}'
+      src_netbox_token: '{{ input_src_netbox_token }}'
+      dst_netbox_url: '{{ input_dst_netbox_url }}'
+      dst_netbox_token: '{{ input_dst_netbox_token }}'
+
+    tasks:
+      - name: Sync tags
+        netbox.netbox.netbox_tag:
+          netbox_url: '{{ dst_netbox_url }}'
+          netbox_token: '{{ dst_netbox_token }}'
+          data:
+            name: '{{ item.value.name }}'
+            color: '{{ item.value.color }}'
+            description: '{{ item.value.description }}'
+        loop: "{{ query('netbox.netbox.nb_lookup', 
+                  'tags', 
+                  api_endpoint=src_netbox_url, 
+                  token=src_netbox_token}}"
+
